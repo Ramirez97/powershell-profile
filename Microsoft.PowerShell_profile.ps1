@@ -351,6 +351,9 @@ if (Get-Command zoxide -ErrorAction SilentlyContinue) {
 Set-Alias -Name z -Value __zoxide_z -Option AllScope -Scope Global -Force
 Set-Alias -Name zi -Value __zoxide_zi -Option AllScope -Scope Global -Force
 
+# GitStash Function
+function Get-GitStash { gitk --all $(git fsck --no-reflog | Select-String "(dangling commit )(.*)" | %{ $_.Line.Split(' ')[2] }) }
+
 # Help Function
 function Show-Help {
     @"
@@ -434,6 +437,8 @@ flushdns - Clears the DNS cache.
 cpy <text> - Copies the specified text to the clipboard.
 
 pst - Retrieves text from the clipboard.
+
+Get-GitStash - Retrieves lost/unreachable git stashes (Use temporary branches instead of stashes).
 
 Use 'Show-Help' to display this help message.
 "@
